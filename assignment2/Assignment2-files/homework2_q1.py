@@ -17,13 +17,26 @@ class RandomForestClassifier:
         for i in range(self.num_estimators):
             rng = np.random.RandomState(self.random_state + i)
             # TODO: Implement bootstrap sampling and model training
+            idx = rng.choice(n_samples, size=n_samples, replace=True) # Example of bootstrap sampling
+            X_sample = X[idx]
+            y_sample = y[idx]
+            model = DecisionTreeClassifier(max_depth=self.tree_max_depth, random_state=self.random_state + i)
+            model.fit(X_sample, y_sample)
+            self.models.append(model)
         return self
 
     def predict(self, X):
         n_samples = X.shape[0]
         n_models = len(self.models)
         # TODO: Implement this method
-        return np.array([])
+        ret = []
+        for i in range(n_samples):
+            votes = []
+            for j in range(n_models):
+                votes.append(self.models[j].predict(X[i:i+1]))
+            final_vote, count = np.unique(votes, return_counts=True) # Majority vote
+            ret.append(final_vote[np.argmax(count)]) # Get the class with the most votes
+        return np.array(ret)
 
 class AdaBoostClassifier:
     """AdaBoost SAMME (multi-class) using DecisionTreeClassifier base learners."""
@@ -47,6 +60,20 @@ class AdaBoostClassifier:
         self.alphas = []
         
         # TODO: Implement the rest of this method
+        random_guess = 1 - 1/self.K
+        for i in range(self.num_estimators):
+            model = DecisionTreeClassifier(max_depth=1, random_state=self.random_state+i)
+            model.fit(X, y, sample_weight=w)
+            pred = model.predict(X)
+            error = np.average(pred != y, weights=w)
+            if error >= random_guess or error <= 0:
+                break
+            alpha = np.log((1-error)/error) + np.log(self.K-1)
+            self.alphas.append(alpha)
+            w *= np.exp(alpha * (pred != y))
+            w /= np.sum(w)
+            self.models.append(model)
+        
         return self
         
     def predict(self, X):
@@ -54,8 +81,14 @@ class AdaBoostClassifier:
         if not self.models:
             raise ValueError("AdaBoostClassifier is not fit yet.")
         # TODO: Implement this method, returning the predictions as a numpy array
-        
-        return None # 
+
+        votes = np.zeros((X.shape[0], self.K))
+        for i in range(len(self.models)):
+            pred = self.models[i].predict(X)
+            votes[np.arange(X.shape[0]), pred] += self.alphas[i]
+        pred = np.argmax(votes, axis=1)
+
+        return pred
 
 
 
