@@ -22,19 +22,44 @@ def get_splits(n, k, y, seed):
     splits = None
     # Implement your code to construct the splits here
     # Do NOT change the return statement
-
+    np.random.seed(seed)
+    index_pool = np.random.permutation(n)
+    splits = np.array_split(index_pool, k)
+    splits = [split.tolist() for split in splits]
     return splits
 
 def my_cross_val(method, X, y, splits):
     errors = []
     # Implement your code to construct the list of errors here
     # Do NOT change the return statement
+    for i in range(len(splits)):
+        model = get_model(method)
+        test = splits[i]
+        train = [idx for j in range(len(splits)) for idx in splits[j] if j != i]
+        model.fit(X[train], y[train])
+        pred = model.predict(X[test])
+        error = np.average(pred != y[test])
+        errors.append(error)
     
     return np.array(errors)
 
 def get_model(method: str, random_state: int = 42):
     # Implement your code to return the model here.
     # Make sure to use the parameters specified in instructions.
+    
+    if method == "DecisionTreeClassifier":
+        return DecisionTreeClassifier(max_depth=DECISION_TREE_MAX_DEPTH, random_state=random_state)
+    elif method == "GaussianNB":
+        return GaussianNB()
+    elif method == "LogisticRegression":
+        return LogisticRegression(penalty='l2', solver='lbfgs', max_iter=1000, random_state=random_state)
+    elif method == "RandomForestClassifier":
+        return RandomForestClassifier(tree_max_depth=BAGGING_TREE_MAX_DEPTH, 
+                                      num_estimators=BAGGING_NUM_ESTIMATORS, 
+                                      random_state=random_state)
+    elif method == "AdaBoostClassifier":
+        return AdaBoostClassifier(num_estimators=BOOST_NUM_ESTIMATORS, 
+                                  random_state=random_state)
     return None
 
 
