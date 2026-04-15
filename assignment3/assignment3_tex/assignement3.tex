@@ -1,0 +1,354 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{letterpaper, margin=1in}
+\usepackage{amsmath}
+\usepackage{graphicx} % For embedding images (Q1b)
+\usepackage{enumitem}
+\usepackage{booktabs} % For nice tables (Q3)
+\usepackage{tikz}
+
+\title{CS 412 Assignment 3 Report}
+\author{Donggyu Park}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% ==========================================
+% Question 1
+% ==========================================
+\section*{1. Decision Tree (25 points)}
+
+\begin{enumerate}[label=(\alph*)]
+    \item \textbf{(11 points) Compute the Information Gain for all of the features. Show all intermediate computations.}
+    \\ The target is to classify "Spoiled".
+    \\ \textbf{Entropy for "Spoiled":}
+
+        $$ H(S) = -\sum_{i=1}^{n} p_i \log_2 p_i $$ 
+  
+        $$ H(S) = - \left(\frac{5}{11}\right) \log_2\left(\frac{5}{11}\right) - \left(\frac{6}{11}\right) \log_2\left(\frac{6}{11}\right) $$ 
+
+        $$ H(S) = 0.9940302114769565 $$
+
+    \textbf{Information Gain:} $IG(S, A) = H(S) - \sum_{v \in Values(A)} \frac{|S_v|}{|S|} H(S_v)$
+    \begin{enumerate}[label=\roman*.]
+        \item \textbf{Color} 
+            $$H(\text{Red}) = - \left(\frac{2}{5}\right) \log_2\left(\frac{2}{5}\right) - \left(\frac{3}{5}\right) \log_2\left(\frac{3}{5}\right) = 0.9709505944546686$$
+            $$H(\text{Yellow}) = - \left(\frac{3}{6}\right) \log_2\left(\frac{3}{6}\right) - \left(\frac{3}{6}\right) \log_2\left(\frac{3}{6}\right) = 1.0$$
+
+            \textbf{Weighted average entropy for Color:}
+            $$H(S_{\text{Color}}) = \frac{5}{11} \cdot 0.9709505944546686 + \frac{6}{11} \cdot 1.0 = 0.986795724752122$$
+
+            \textbf{Information Gain for Color:}
+            $$IG(S, \text{Color}) = H(S) - H(S_{\text{Color}}) = 0.9940 - 0.9868 = 0.00723448672483451$$
+
+        \item \textbf{Texture}
+            $$H(\text{Smooth}) = - \left(\frac{3}{5}\right) \log_2\left(\frac{3}{5}\right) - \left(\frac{2}{5}\right) \log_2\left(\frac{2}{5}\right) = 0.9709505944546686$$
+            $$H(\text{Rough}) = - \left(\frac{2}{4}\right) \log_2\left(\frac{2}{4}\right) - \left(\frac{2}{4}\right) \log_2\left(\frac{2}{4}\right) = 1.0$$
+            $$H(\text{Wrinkled}) = 0$$
+            $$H(\text{Soft}) = 0$$
+
+            \textbf{Weighted average entropy for Texture:}
+            $$H(S_{\text{Texture}}) = \frac{5}{11} \cdot 0.97095 + \frac{4}{11} \cdot 1.0 + \frac{1}{11} \cdot 0 + \frac{1}{11} \cdot 0 = 0.8049775429339403$$
+
+            \textbf{Information Gain for Texture:}
+            $$IG(S, \text{Texture}) = H(S) - H(S_{\text{Texture}}) = 0.9940 - 0.8050 = 0.18905266854301617$$
+
+        \item \textbf{Smell}
+            $$H(1) = 0$$
+            $$H(2) = - \left(\frac{2}{5}\right) \log_2\left(\frac{2}{5}\right) - \left(\frac{3}{5}\right) \log_2\left(\frac{3}{5}\right) = 0.9709505944546686$$
+            $$H(3) = 0$$
+
+            \textbf{Weighted average entropy for Smell:}
+            $$H(S_{\text{Smell}}) = \frac{3}{11} \cdot 0 + \frac{5}{11} \cdot 0.97095 + \frac{3}{11} \cdot 0 = 0.4413411792975766$$
+
+            \textbf{Information Gain for Smell:}
+            $$IG(S, \text{Smell}) = H(S) - H(S_{\text{Smell}}) = 0.9940 - 0.4413 = 0.5526890321793798$$
+    \end{enumerate}
+    % TODO: Show Entropy(S) and Information Gain for Color, Texture, and Smell.
+    
+    \item \textbf{(5 points) Draw the full decision tree that would be learned for this dataset.}
+    \\
+\begin{center}
+\begin{tikzpicture}[
+  every node/.style = {shape=rectangle, rounded corners, draw, align=center, minimum width=1.2cm, minimum height=0.6cm},
+  edge from parent/.style = {draw, -latex},
+  level 1/.style={sibling distance=5cm, level distance=4cm},
+  level 2/.style={sibling distance=5cm, level distance=3.5cm},
+  level 3/.style={sibling distance=2cm}
+]
+
+  \node {\textbf{Smell}}
+    child { node {Yes\\Yes\\Yes} 
+      edge from parent node[left, draw=none] {1~~} 
+    }
+    child { node {\textbf{Texture}}
+      child { node {Yes} 
+        edge from parent node[left, draw=none] {Rough~~} 
+      }
+      child { node {No} 
+        edge from parent node[left, draw=none] {Wrinkled~~} 
+      }
+      child { node {No} 
+        edge from parent node[right, draw=none] {~~Soft} 
+      }
+      child { node {\textbf{Color}}
+        child { node {Yes} 
+          edge from parent node[left, draw=none] {Red~~} 
+        }
+        child { node {No} 
+          edge from parent node[right, draw=none] {~~Yellow} 
+        }
+        edge from parent node[right, draw=none] {~~Smooth} 
+      }
+      edge from parent node[fill=white, draw=none] {2} 
+    }
+    child { node {No\\No\\No} 
+      edge from parent node[right, draw=none] {~~3} 
+    };
+
+\end{tikzpicture}
+\end{center}
+    
+    \item \textbf{(9 points) Fruit ID Feature Analysis}
+    \begin{enumerate}[label=\roman*.]
+        \item \textbf{What would the Information Gain for the Fruit ID feature be?}
+        \\
+        % TODO: Answer here.
+        Fruit\_id will be a unique attribute.
+        Thus if we split with Fruit\_ID there will be only one data point in each subset.
+        The entropy of each subset will thus be 0,
+        making the information gain be the same as the initial entropy of the dataset.
+        
+        \item \textbf{Would the standard decision tree algorithm (ID3) choose Fruit ID as the root?}
+        \\
+        % TODO: Answer here.
+        Yes because this way, the information gain is maximized
+        
+        \item \textbf{Is Fruit ID a useful feature? Describe the fundamental flaw or bias in the Information Gain metric.}
+        \\
+        % TODO: Explain why IG favors attributes with many distinct values.
+        No. If an unseen fruit\_id is given, the tree won't know how to appropriately classify it, 
+        as the branches were constructed based on fruit\_1 to fruit\_11. 
+        We can conclude that Information Gain is a greedy algorithm that is biased to the features with more unique values.
+
+
+    \end{enumerate}
+\end{enumerate}
+
+\newpage
+% ==========================================
+% Question 2
+% ==========================================
+\section*{2. Linear Models (30 points)}
+
+\textbf{Part A}
+\begin{enumerate}[label=(\alph*)]
+    \item \textbf{(5 pts) Why does the decision boundary in Figure B provide poorer classification performance than the boundary in Figure A?}
+    \\
+    % TODO: Answer here.
+    If we only look at the data points in the plots, the decision boundary in Figure B does not provide poor classification performance than A.
+    Boundary A fails to classify four points of squares, while Boundary B fials to classify three points of square.
+    However, the decision boundary in Figure B is influenced by an extreme point at (7,-6) which is an outlier.
+    This outlier point distorts the decision boundary, making it less representative of the overall data distribution.
+    Due to this distortion the generalization performance is degraded.
+
+    \item \textbf{(5 pts) Explain how the square loss function contributes to the issue observed in Figure B.}
+    \\
+    % TODO: Answer here.
+    We can see that Boundary B is influenced by the outlier point at (7,-6) with its slope smaller than that of Boundary A.
+    This is because the square loss function penalizes larger errors that are far from the boundary more heavily than smaller ones.
+
+    
+    \item \textbf{(5 pts) Suppose the extreme point in the right plot were removed. Describe how the learned decision boundary would likely change and explain why.}
+    \\
+    % TODO: Answer here.
+    Since the outlier point at (7,-6) is removed, 
+    the decision boundary would likely shift to better fit the remaining data points like Boundary A.
+\end{enumerate}
+
+\vspace{1em}
+\textbf{Part B}
+\begin{enumerate}[label=(\alph*), start=4]
+    \item \textbf{(5 pts) Describe how you might use an SVM as a classifier to predict whether an item belongs to the +1 or -1 class in Figure 1.}
+    \\
+    % TODO: Explain the use of a non-linear kernel (e.g., RBF or Polynomial) for the circular boundary.
+    Data points in Figure 1 are distrubuted in a circular pattern, making it impossible to separate the with a linear boundary.
+    Thus, a non linear kernel such as RBF or polynomial must be introduced to transform the data into a high dimesion space.
+    Then, a linear hyperplane can be used to separate the data in the space.
+
+    \item \textbf{(5 pts) In SVM, it is often the case that data points cannot be well-separated via a "hard margin". Can you provide a solution to solve this problem?}
+    \\
+    % TODO: Explain soft-margin SVM and the introduction of slack variables.
+    If the data is noisy, hard margin may fail because it tries to strictly separate the "noisy" data.
+    Therefore, by introducing soft margin, we have to allow some misclassifications to form a less-sensitive decision boundary.
+    This is achieved by introducing slack variables that allow some data points to be on the wrong side.
+
+    \item \textbf{(5 pts) In a soft-margin SVM, the parameter C controls the trade-off...}
+    \begin{itemize}
+        \item \textbf{What happens when C is very large?}
+        \\
+        % TODO: Answer here.
+        Big penalties are imposed on misclassifications. 
+        The decision boundary is likely to be hard margin, which may lead to overfitting if the data is noisy.
+        
+        \item \textbf{What happens when C is very small?}
+        \\
+        % TODO: Answer here.
+        Little penalty is imposed on misclassifications.
+        The decision boundary is likely to be very flexible, which may lead to underfitting.
+
+    \end{itemize}
+\end{enumerate}
+
+\newpage
+% ==========================================
+% Question 3
+% ==========================================
+\section*{3. Naive Bayes Classifier (25 points)}
+
+\begin{enumerate}[label=(\alph*)]
+    \item \textbf{(20 points) Compute the likelihood tables for all three features.}
+    \\
+    % TODO: Fill in the probabilities based on the dataset.
+    
+    \textbf{Table 2: Likelihood Table for Nausea}
+    \begin{center}
+    \begin{tabular}{lcc}
+        \toprule
+        & \multicolumn{2}{c}{\textbf{Has Food Poisoning}} \\
+        \cmidrule(lr){2-3}
+        \textbf{Nausea} & \textbf{Positive} & \textbf{Negative} \\
+        \midrule
+        \textbf{Yes} & $\frac{3}{4}$ & $\frac{1}{3}$ \\
+        \textbf{No}  & $\frac{1}{4}$ & $\frac{2}{3}$ \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+
+    \vspace{1em}
+    \textbf{Table 3: Likelihood Table for Fever}
+    \begin{center}
+    \begin{tabular}{lcc}
+        \toprule
+        & \multicolumn{2}{c}{\textbf{Has Food Poisoning}} \\
+        \cmidrule(lr){2-3}
+        \textbf{Fever} & \textbf{Positive} & \textbf{Negative} \\
+        \midrule
+        \textbf{Yes} & $\frac{3}{4}$ & $\frac{1}{3}$ \\
+        \textbf{No}  & $\frac{1}{4}$ & $\frac{2}{3}$ \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+
+    \vspace{1em}
+    \textbf{Table 4: Likelihood Table for Stomach Cramps}
+    \begin{center}
+    \begin{tabular}{lcc}
+        \toprule
+        & \multicolumn{2}{c}{\textbf{Has Food Poisoning}} \\
+        \cmidrule(lr){2-3}
+        \textbf{Stomach Cramps} & \textbf{Positive} & \textbf{Negative} \\
+        \midrule
+        \textbf{Yes} & $\frac{3}{4}$ & $\frac{0}{3}$ \\
+        \textbf{No}  & $\frac{1}{4}$ & $\frac{3}{3}$ \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+
+    \item \textbf{(5 points) Classify: Nausea = No, Fever = Yes, and Stomach Cramps = No. Show intermediate calculations.}
+    \\ \\
+    % TODO: Show P(Positive|X) and P(Negative|X) calculations using Bayes theorem, then compare.
+    \textbf{Prior Probabilities} \\
+    $P(\text{Positive}) = 4/7$ \\
+    $P(\text{Negative}) = 3/7$ \\ \\
+
+    \textbf{Likelihoods} \\
+    \textbf{Positive Class:} \\
+    $P(\text{Nausea} = \text{No}|\text{Positive}) = \frac{1}{4}$ \\
+    $P(\text{Fever} = \text{Yes}|\text{Positive}) = \frac{3}{4}$ \\
+    $P(\text{Stomach Cramps} = \text{No}|\text{Positive}) = \frac{1}{4}$ \\ \\
+    \textbf{Negative Class:} \\
+    $P(\text{Nausea} = \text{No}|\text{Negative}) = \frac{2}{3}$ \\
+    $P(\text{Fever} = \text{Yes}|\text{Negative}) = \frac{1}{3}$ \\
+    $P(\text{Stomach Cramps} = \text{No}|\text{Negative}) = \frac{3}{3}$ \\ \\
+
+    \textbf{Score(Positive)} \\
+    $$\text{Score(Pos)} = \frac{4}{7} \times \frac{1}{4} \times \frac{3}{4} \times \frac{1}{4} = \frac{3}{112} = 0.0268$$
+    \textbf{Score(Negative)} \\
+    $$\text{Score(Neg)} = \frac{3}{7} \times \frac{2}{3} \times \frac{1}{3} \times \frac{3}{3} = \frac{6}{63} = 0.0952$$
+
+    \textbf{Normalization} \\
+    $P(\text{Positive} \mid X) = \frac{3/112}{41/336} = \frac{9}{41} = \textbf{0.2195}$\\
+    $P(\text{Negative} \mid X) = \frac{2/21}{41/336} = \frac{32}{41} = \textbf{0.7805}$
+
+
+\end{enumerate}
+
+\newpage
+% ==========================================
+% Question 4
+% ==========================================
+\section*{4. Posterior Probabilities (20 points)}
+
+\begin{enumerate}[label=(\alph*)]
+    \item \textbf{(8 points) Draw a candy (Candy1) = "lime". What are the posterior probabilities of each type of bag?}
+    \\
+    % TODO: Show Bayes rule calculations for p(h1|lime), p(h2|lime), p(h3|lime).
+    \textbf{Bayes Rule:}\\
+    $$P(h_i | \text{lime}_1) = \frac{P(\text{lime}_1 | h_i) P(h_i)}{P(\text{lime}_1)}$$
+
+    \textbf{Prior Probabilities} \\
+    $P(h_1) = 1/4$ \\
+    $P(h_2) = 1/2$ \\
+    $P(h_3) = 1/4$
+
+    \textbf{Likelihoods} \\
+    $P(\text{lime}_1 | h_1) = 0$ \\
+    $P(\text{lime}_1 | h_2) = 50/100 = 1/2$ \\
+    $P(\text{lime}_1 | h_3) = 100/100 = 1$
+
+    \textbf{Marginal Probability (Law of Total Probability)} \\
+    $$P(\text{lime}_1) = (0 \times 1/4) + (1/2 \times 1/2) + (1 \times 1/4) = 0 + 1/4 + 1/4 = 1/2$$
+
+    \textbf{Posterior Probabilities} \\
+    $P(h_1 | \text{lime}_1) = \frac{0 \times 1/4}{1/2} = \textbf{0}$ \\
+    $P(h_2 | \text{lime}_1) = \frac{(1/2) \times (1/2)}{1/2} = \textbf{1/2}$ \\
+    $P(h_3 | \text{lime}_1) = \frac{1 \times 1/4}{1/2} = \textbf{1/2}$
+
+
+
+    \item \textbf{(8 points) Draw another candy (Candy2) = "lime" (without replacement). What are the new posterior probabilities?}
+    \\
+    % TODO: Show Bayes rule calculations considering the updated bag contents.
+
+    \textbf{New Priors (from part a):} \\
+    $P'(h_1) = 0$ \\
+    $P'(h_2) = 1/2$ \\
+    $P'(h_3) = 1/2$
+
+    \textbf{New Likelihoods ($Candy_2 = \text{lime}$ given $Candy_1 = \text{lime}$):} \\
+    Since one lime candy was removed, the bags now have 99 candies.\\
+    $P(\text{lime}_2 | h_1, \text{lime}_1) = 0$ \\
+    $P(\text{lime}_2 | h_2, \text{lime}_1) = 49/99$ \\
+    $P(\text{lime}_2 | h_3, \text{lime}_1) = 99/99 = 1$
+
+    \textbf{Marginal Probability for the second draw:} \\
+    $$P(\text{lime}_2 | \text{lime}_1) = (0 \times 0) + \left(\frac{49}{99} \times \frac{1}{2}\right) + \left(1 \times \frac{1}{2}\right)$$
+    $$P(\text{lime}_2 | \text{lime}_1) = \frac{49}{198} + \frac{99}{198} = \frac{148}{198} = \frac{74}{99}$$
+
+    \textbf{Posterior Probabilities:} \\
+    $P(h_1 | \text{lime}_1, \text{lime}_2) = 0$ \\
+    $P(h_2 | \text{lime}_1, \text{lime}_2) = \frac{(49/99) \times (1/2)}{74/99} = \frac{49/198}{148/198} = \frac{49}{148}$ \\
+    $P(h_3 | \text{lime}_1, \text{lime}_2) = \frac{1 \times (1/2)}{74/99} = \frac{99/198}{148/198} = \frac{99}{148}$
+        
+    \item \textbf{(4 points) Are your computations in (b) above using conditional independence in any form?}
+    \\
+    % TODO: Answer Yes/No and justify based on the "without replacement" condition.
+    No, the computations in (b) do not use conditional independence. 
+    The outcome of the first draw physically alters the contents of the bag.
+\end{enumerate}
+
+\end{document}
