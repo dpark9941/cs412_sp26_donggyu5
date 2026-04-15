@@ -1,0 +1,44 @@
+def apriori(transaction_filename, cost_filename, s, k, m):
+    """
+    Returns a dictionary mapping itemsets to their support counts based on Apriori.
+
+    Input parameters:
+        transaction_filename: the name of the file containing the transactions
+        cost_filename: the name of the file containing the costs
+        s: the minimum support threshold
+        k: the maximum sum of the costs of the items in the itemset
+        m: the minimum price of the itemset
+    """
+    apriori_result = {} # default initialization
+    
+    # complete your code
+    
+    return apriori_result
+
+
+def mine_rules(transaction_filename, cost_filename, s, k, m, min_conf):
+    """
+    Returns a dictionary mapping rule strings to metrics.
+    Rule strings are 'A->BC' with each side alphabetically sorted.
+    Only rules with confidence >= min_conf are returned.
+
+    Input parameters:
+      transaction_filename: the name of the file containing the transactions
+      cost_filename: the name of the file containing the costs
+      s: the minimum support threshold
+      k: the maximum sum of the costs of the items in the itemset
+      m: the minimum price of the itemset
+      min_conf: the minimum confidence threshold
+
+    The returned dict has:
+      key:   rule string, e.g., 'A->BC'
+      value: {'support_count': int,
+              'support': float,
+              'confidence': float,
+              'lift': float}
+    """
+    rules = {} # default initialization
+    
+    # complete your code
+    
+    return rules
