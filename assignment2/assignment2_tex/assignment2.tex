@@ -1,0 +1,92 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{letterpaper, margin=1in}
+\usepackage{amsmath}
+\usepackage{enumitem}
+
+\title{CS 412 Assignment 2 Report}
+\author{Donggyu Park (donggyu5)}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Part 1}
+
+\subsection{Part 1 Code (35 points)}
+
+Code is submitted separately via homework2\_q1.py to Gradescope.
+
+\subsection{Short Answers (15 points)}
+% Answer in 2 to 3 sentences each.
+
+\begin{enumerate}[label=(\alph*)]
+    \item \textbf{Why does bagging primarily reduce variance, while boosting can reduce bias?}
+    \\% TODO: Write your answer here (2-3 sentences)
+    Bagging typically uses base learners such as deep decision trees, which have high variance. 
+    By averaging the predictions from the high variance base learners, bagging can effectively smooth out
+    the noise (or high variance) of the individual learners. As a result, bagging reduces overall variance.
+
+    \item \textbf{Why are decision stumps commonly used as base learners in boosting?}
+    \\% TODO: Write your answer here (2-3 sentences)
+    In Boosting, decision stumps (depth = 1) act as weak learners that have high bias and low variance.
+    Boosting builds an ensemble model by sequentially training these weak learners.
+    Since ensenble learning builds a strong learner by sequentially training multiple weak learners based on previous errors,
+    using simple models like decision stumps allows boosting to effectively reduce bias while controlling variance.
+
+    \item \textbf{What happens to AdaBoost if the base learner performs worse than random guessing? Briefly explain why.}
+    \\% TODO: Write your answer here (2-3 sentences)
+    In AdaBoost, if the base learner error rate is worse than random guessing $\epsilon > 1 - 1/K$, the algorithm will stop the training.
+    If a weak learner performs worse than random guessing, it means that the contribution of that learner will make the overall model perform worse.
+    Also, with a high error rate, the model voting weight, $\alpha$, will be negative, making the ensemble learning (more weight on difficult samples) impossible.
+    
+\end{enumerate}
+
+\vspace{1em}
+\hrule
+\vspace{1em}
+
+\section{Part 2}
+
+\subsection{Part 2 Code (35 points)}
+Code is submitted separately via homework2\_q2.py to Gradescope.
+
+\subsection{Data Challenges: Imbalance and Missing Values (15 points)}
+
+\begin{enumerate}[label=(\alph*)]
+    \item \textbf{Class Imbalance (Report Task)}
+    % TODO:
+        \begin{enumerate}[label=(\arabic*)]
+        \item \textbf{Why accuracy is a poor metric for evaluating performance in this scenario.}
+        \\ If the model blindly predicts "1", the accuracy will still be 90\% regardless of the model's actual performance.
+        \item \textbf{Define precision, recall, and explain how they combine to form the F1-score.}
+        \\ Precision: $\frac{TP}{TP + FP}$, Recall: $\frac{TP}{TP + FN}$, F1-score: $2 \cdot \frac{Precision \cdot Recall}{Precision + Recall}$.
+        \\ The F1 score is the harmonic mean of precision and recall that is not biased to either metric.
+        \item \textbf{Explain why the macro-average F1-score is a suitable metric for imbalanced classification.}
+        \\ Macro average F1 score averages the F1 score for each class.
+            This approach gives equal weight to each class, so one class does not dominate the overall score.
+            If we simply use accuracy, the model could achieve by simply predicting all classses as 1.
+            If macro average F1 score, the model has to also perfrom well on "not 1 class", 
+            because the score for "not 1 class" will also be averaged in the final score.
+    \end{enumerate}
+    \vspace{1em} % Remove this if you don't need extra space
+    
+    \item \textbf{Missing Values (Report Only)}
+    % TODO: 
+        \begin{enumerate}[label=(\arabic*)]
+        \item \textbf{Choose an imputation strategy (e.g., mean imputation, median imputation, or KNN imputation).}
+        \\ KNN imputation.
+        \item \textbf{Justify why your chosen strategy would be appropriate for this dataset.}
+        \\ Since we are dealing with handwriting dataset(Digits dataset), the spatial relationships becomes important when it comes to missing value interpolation.
+            Thus, KNN is the appropriate option as it can capture the features near the missing pixel.
+        \item \textbf{Discuss the potential drawbacks of an alternative method.}
+        \\ For instance, mean imputation can introduce bias. If we take mean value of the entire dataset and replace it with the pixel that is missing,
+            the imputed value may not reflect the actual value of that pixel for a specific sample because the mean shuffles pixel values that are not relevant to the missing pixel.
+
+        \end{enumerate}
+            
+\end{enumerate}
+
+\end{document}
