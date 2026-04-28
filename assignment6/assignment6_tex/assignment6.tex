@@ -1,0 +1,323 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{letterpaper, margin=1in}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{array}
+
+\title{CS 412 Assignment 6 Report}
+\author{Donggyu Park}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% ==========================================
+% Question 1
+% ==========================================
+\section*{1. Short-Answer Questions (24 points)}
+
+\begin{enumerate}[label=(\alph*)]
+
+    % ---- 1(a) ----
+    \item \textbf{(3 points) In the K-Means algorithm, the initial placement of centroids has only a minimal impact on the quality of the resulting clustering. Discuss how initialization affects convergence and solution quality.}
+    \\
+    % TODO: Answer here.
+
+
+    \vspace{2em}
+
+    % ---- 1(b) ----
+    \item \textbf{(3 points) What is the motivation behind using the k-medians algorithm instead of the k-means algorithm in certain situations? Is the k-medians algorithm more computationally demanding than k-means?}
+    \\
+    % TODO: Answer here.
+
+
+    \vspace{2em}
+
+    % ---- 1(c) ----
+    \item \textbf{(3 points) A student claims that in a perfect clustering, the conditional entropy $H(Y \mid C)$ is maximized. Evaluate this claim and determine what value $H(Y \mid C)$ should take in the ideal case. Justify your answer.}
+    \\
+    % TODO: Answer here.
+
+
+    \vspace{2em}
+
+    % ---- 1(d) ----
+    \item \textbf{(3 points) In the K-Means Clustering algorithm, why might a cluster center have no points assigned to it after the cluster assignment step? Explain how this situation can arise during the algorithm's iterations.}
+    \\
+    % TODO: Answer here.
+
+
+    \vspace{2em}
+
+    % ---- 1(e) ----
+    \item \textbf{(4 points) What is the best clustering method (partition-based, hierarchical, or density) for clustering employees in a company based on their salaries and years of working experience? Justify your answer, assuming the data is continuous and free of significant outliers.}
+    \\
+    % TODO: Answer here.
+
+
+    \vspace{2em}
+
+    % ---- 1(f) ----
+    \item \textbf{(4 points) Explain why a typical hierarchical clustering method may not lead to better quality clustering than a partitioning method.}
+    \\
+    % TODO: Answer here.
+
+
+    \vspace{2em}
+
+    % ---- 1(g) ----
+    \item \textbf{(4 points) In DBSCAN, if a point $p$ is directly density-reachable from a point $q$, explain why this implies that $q$ must be a core point, but $p$ does not necessarily have to be.}
+
+    \textit{Recall:} A point $p$ is directly density-reachable from $q$ (w.r.t.\ $\mathit{Eps}$, $\mathit{MinPts}$) if
+    \[
+        p \in N_{\mathit{Eps}}(q) \quad \text{and} \quad |N_{\mathit{Eps}}(q)| \geq \mathit{MinPts}.
+    \]
+    \\
+    % TODO: Answer here.
+
+
+\end{enumerate}
+
+\newpage
+% ==========================================
+% Question 2
+% ==========================================
+\section*{2. Clustering Evaluation (26 points)}
+
+Cluster information (n = 19, $|X|=6$, $|O|=6$, $|\Delta|=7$):
+\begin{center}
+\begin{tabular}{lccc|c}
+\toprule
+ & $X$ & $O$ & $\Delta$ & Total \\
+\midrule
+Cluster 1 & 5 & 0 & 2 & 7 \\
+Cluster 2 & 1 & 4 & 1 & 6 \\
+Cluster 3 & 0 & 2 & 4 & 6 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{enumerate}[label=(\alph*)]
+
+    % ---- 2(a) ----
+    \item \textbf{(4 points) What is the total purity of this clustering?}
+
+    The purity is defined as:
+    \[
+        \text{Purity}(\Omega, \mathbb{C}) = \frac{1}{n} \sum_{k} \max_{j} |C_k \cap L_j|
+    \]
+    % TODO: Compute total purity here.
+
+
+    \vspace{2em}
+
+    % ---- 2(b) ----
+    \item \textbf{(6 points) What is the precision of each cluster?}
+
+    For each cluster $C_k$ with majority class $L_j$, precision is defined as:
+    \[
+        \text{Precision}(C_k) = \frac{|C_k \cap L_j|}{|C_k|}
+    \]
+    % TODO: Compute precision for each cluster.
+
+
+    \vspace{2em}
+
+    % ---- 2(c) ----
+    \item \textbf{(6 points) What is the recall of each cluster for its majority class?}
+
+    For each cluster $C_k$ with majority class $L_j$, recall is defined as:
+    \[
+        \text{Recall}(C_k) = \frac{|C_k \cap L_j|}{|L_j|}
+    \]
+    % TODO: Compute recall for each cluster.
+
+
+    \vspace{2em}
+
+    % ---- 2(d) ----
+    \item \textbf{(6 points) What is the F-measure of each cluster?}
+
+    The F-measure is defined as:
+    \[
+        F(C_k) = \frac{2 \cdot \text{Precision}(C_k) \cdot \text{Recall}(C_k)}{\text{Precision}(C_k) + \text{Recall}(C_k)}
+    \]
+    % TODO: Compute F-measure for each cluster.
+
+
+    \vspace{2em}
+
+    % ---- 2(e) ----
+    \item \textbf{(4 points) What is the NMI score of this clustering? (Use natural logs.)}
+
+    The Normalized Mutual Information is defined as:
+    \[
+        \text{NMI}(\Omega, \mathbb{C}) = \frac{I(\Omega; \mathbb{C})}{\frac{1}{2}[H(\Omega) + H(\mathbb{C})]}
+    \]
+    where $I(\Omega;\mathbb{C}) = H(\Omega) - H(\Omega \mid \mathbb{C})$.
+    % TODO: Compute NMI here.
+
+
+\end{enumerate}
+
+\newpage
+% ==========================================
+% Question 3
+% ==========================================
+\section*{3. Clustering Algorithms (30 points)}
+
+The dataset consists of 13 points:
+\begin{center}
+\begin{tabular}{ccc}
+\toprule
+Index & $x_1$ & $x_2$ \\
+\midrule
+1  & 1 & 3 \\
+2  & 1 & 2 \\
+3  & 2 & 1 \\
+4  & 2 & 2 \\
+5  & 2 & 3 \\
+6  & 3 & 2 \\
+7  & 5 & 3 \\
+8  & 4 & 3 \\
+9  & 4 & 5 \\
+10 & 5 & 4 \\
+11 & 5 & 5 \\
+12 & 6 & 4 \\
+13 & 6 & 5 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{enumerate}[label=(\alph*)]
+
+    % ---- 3(a) ----
+    \item \textbf{(10 points) Cluster the above points using the K-means algorithm with $k=2$. Use $(0,4)$ and $(6,5)$ as the initial centers. Show your reasoning.}
+
+    \textbf{Initial centers:} $\mu_1 = (0, 4)$, $\mu_2 = (6, 5)$.
+
+    \textbf{Iteration 1 --- Assignment step:}
+
+    For each point, compute the Euclidean distance to each center and assign to the nearest.
+    \[
+        d(p, \mu) = \sqrt{(x_1 - \mu_{x_1})^2 + (x_2 - \mu_{x_2})^2}
+    \]
+    % TODO: Compute distances and show assignment table.
+
+
+    \textbf{Iteration 1 --- Update step:}
+    % TODO: Compute new centroids.
+
+
+    \textbf{Iteration 2 (and subsequent):}
+    % TODO: Continue until convergence. Show final clusters.
+
+
+    \vspace{2em}
+
+    % ---- 3(b) ----
+    \item \textbf{(10 points) Use DBSCAN with $\mathit{MinPts} = 2$ and $\mathit{Eps} = 1.5$. Outline your clustering process.}
+
+    \textbf{Step 1 --- Identify core points:}
+
+    A point $p$ is a core point if $|N_{\mathit{Eps}}(p)| \geq \mathit{MinPts}$.
+    % TODO: For each point, list neighbors within Eps=1.5 and identify core/border/noise.
+
+
+    \textbf{Step 2 --- Form clusters:}
+    % TODO: Expand clusters from core points. List final clusters.
+
+
+    \vspace{2em}
+
+    % ---- 3(c) ----
+    \item \textbf{(10 points) Perform AGNES (single-link, Euclidean distance) on the above points.}
+
+    \textbf{Single-link distance:}
+    \[
+        d_{\text{single}}(C_i, C_j) = \min_{p \in C_i,\, q \in C_j} d(p, q)
+    \]
+
+    \textbf{Initial state:} Each of the 13 points forms its own singleton cluster.
+
+    % TODO: Show the merge sequence step by step.
+    % At each step: identify the pair of clusters with minimum single-link distance,
+    % merge them, and update the distance matrix.
+
+
+\end{enumerate}
+
+\newpage
+% ==========================================
+% Question 4
+% ==========================================
+\section*{4. Average-Link Agglomerative Clustering (20 points)}
+
+Pairwise distances between points $a, b, c, d, e$:
+\begin{center}
+\begin{tabular}{c|ccccc}
+ & $a$ & $b$ & $c$ & $d$ & $e$ \\ \hline
+$a$ & 0     &       &       &     &   \\
+$b$ & 2.1   & 0     &       &     &   \\
+$c$ & 4.0   & 6.1   & 0     &     &   \\
+$d$ & 7.8   & 8.6   & 6.1   & 0   &   \\
+$e$ & 7.3   & 7.2   & 7.3   & 3.1 & 0 \\
+\end{tabular}
+\end{center}
+
+\textbf{Average-link distance between clusters $C_i$ and $C_j$:}
+\[
+    d_{\text{avg}}(C_i, C_j) = \frac{1}{|C_i| \cdot |C_j|} \sum_{p \in C_i} \sum_{q \in C_j} d(p, q)
+\]
+
+\begin{enumerate}[label=(\alph*)]
+
+    % ---- 4(a) ----
+    \item \textbf{(10 points) Show which two clusters are merged at each step.}
+
+    % TODO: Show the merge decision at each step (Steps 1 through 4).
+
+    \textbf{Step 1:}
+    % Identify the pair with minimum average-link distance and merge.
+
+
+    \textbf{Step 2:}
+    % Update distances and identify the next pair to merge.
+
+
+    \textbf{Step 3:}
+    % Update distances and identify the next pair to merge.
+
+
+    \textbf{Step 4:}
+    % Final merge.
+
+
+    \vspace{2em}
+
+    % ---- 4(b) ----
+    \item \textbf{(10 points) Show the updated pairwise distance matrix after each merging step.}
+
+    \textbf{After Step 1:}
+    % TODO: Updated distance matrix.
+
+
+    \textbf{After Step 2:}
+    % TODO: Updated distance matrix.
+
+
+    \textbf{After Step 3:}
+    % TODO: Updated distance matrix.
+
+
+\end{enumerate}
+
+\end{document}
