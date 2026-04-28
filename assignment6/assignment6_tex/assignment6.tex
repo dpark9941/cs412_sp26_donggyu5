@@ -28,21 +28,27 @@
     % ---- 1(a) ----
     \item \textbf{(3 points) In the K-Means algorithm, the initial placement of centroids has only a minimal impact on the quality of the resulting clustering. Discuss how initialization affects convergence and solution quality.}
     \\
-    The claim is \textbf{false}. Initialization has a significant impact on both convergence speed and the quality of the final clustering.
+    The assumption in the question is \textbf{incorrect}. Initialization has a \textbf{significant} impact on both convergence and the quality of the final clustering.
 
-    K-means converges to a \textit{local} optimum, not necessarily the global one. Because the algorithm greedily reassigns points to the nearest centroid and recomputes centers, the basin of attraction it follows is determined entirely by the starting positions. A poor initialization can cause:
+    K-means is a greedy algorithm that minimizes the sum-of-squared-error (SSE) objective:
+    \[
+        \text{SSE} = \sum_{k=1}^{K} \sum_{x_i \in C_k} \|x_i - \mu_k\|^2.
+    \]
+    Because each iteration only moves centroids in a direction that locally decreases SSE, the algorithm is guaranteed to converge to a \textit{local} optimum, not the global one. The local optimum reached is entirely determined by the initial centroid positions.
+
+    Poor initialization produces two concrete failure modes:
     \begin{itemize}
-        \item \textbf{Low-quality clusters:} Centroids placed in suboptimal positions lead to cluster boundaries that do not reflect the true structure of the data. For example, if two initial centroids are both placed in the same dense region, one cluster may end up covering too many points while another natural group goes unrepresented.
-        \item \textbf{Wrong groupings:} Consider four points where 1 and 3 are close, and 2 and 4 are close. If the initial centroids happen to group 1 with 2 and 3 with 4, k-means will converge to that incorrect partition because no reassignment step will improve it further.
+        \item \textbf{Dominated clusters:} If two initial centroids are placed inside the same dense region, one centroid absorbs the majority of points while a natural cluster elsewhere goes unrepresented.
+        \item \textbf{Incorrect groupings:} Consider four points where 1 and 3 are close, and 2 and 4 are close. If initial centroids happen to group $\{1,2\}$ and $\{3,4\}$, k-means converges to that wrong partition because no single reassignment step reduces SSE from that configuration.
     \end{itemize}
 
-    \textbf{K-means++ remedy:} To mitigate this, the k-means++ initialization selects the first centroid uniformly at random, then selects each subsequent centroid with probability proportional to the squared distance from the nearest already-chosen centroid:
+    The fact that initialization is critical is precisely why \textbf{k-means++} was developed. It selects each subsequent centroid with probability proportional to the squared distance from the nearest already-chosen centroid:
     \[
-        P(\text{select } x) \propto d(x,\, \text{nearest chosen centroid})^2.
+        P(\text{select } x) \;\propto\; \min_{\mu \in \text{chosen}} d(x,\,\mu)^2,
     \]
-    This spreads initial centroids across the data space, reducing the chance of a poor start. Note that it does \emph{not} deterministically pick the farthest point (which would be susceptible to outliers); instead it introduces distance-weighted randomness, making the method robust on average.
+    spreading initial centroids across the data space. This yields a theoretical guarantee of $O(\log k)$ times the optimal SSE in expectation --- but notably, k-means++ itself does \emph{not} eliminate initialization sensitivity entirely; it still converges to a local optimum.
 
-    In summary, initialization directly determines which local optimum k-means converges to, and k-means++ addresses this by favoring spread-out starting centroids.
+    In summary, the premise of the question is false: initialization is one of the most influential factors in K-means, determining which local optimum the algorithm reaches, and the existence of methods like k-means++ exists precisely to address this problem.
 
     \vspace{2em}
 

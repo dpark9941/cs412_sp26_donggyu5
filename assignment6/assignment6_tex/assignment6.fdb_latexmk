@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1777412769.20248 "/Users/dpark9941/Documents/GitHub/cs412_sp26_donggyu5/assignment6/assignment6_tex/assignment6.tex" "assignment6.pdf" "assignment6" 1777412769.67229 0
-  "/Users/dpark9941/Documents/GitHub/cs412_sp26_donggyu5/assignment6/assignment6_tex/assignment6.tex" 1777412768.94145 10785 39ff4f65d941e81089f87e134817df67 ""
+["pdflatex"] 1777416604.28281 "/Users/dpark9941/Documents/GitHub/cs412_sp26_donggyu5/assignment6/assignment6_tex/assignment6.tex" "assignment6.pdf" "assignment6" 1777416604.71008 0
+  "/Users/dpark9941/Documents/GitHub/cs412_sp26_donggyu5/assignment6/assignment6_tex/assignment6.tex" 1777416604.09113 10951 0bf966fd3d303acd74cada3eb3ad660d ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm" 1136768653 1536 74b7293ec3713bb7fdca8dd1bd1f469c ""
@@ -137,8 +137,8 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1740789879.98015 5467645 128b85b7cde5f5edc5cb7f1dd7ff8736 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1740789831 8221423 79431efea17fc4d5dfcf82ec07fe8ab2 ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "assignment6.aux" 1777412769.59996 32 77e0dffd05b653a64f0caf3eb9bb454a "pdflatex"
-  "assignment6.tex" 1777412768.94145 10785 39ff4f65d941e81089f87e134817df67 ""
+  "assignment6.aux" 1777416604.6587 32 77e0dffd05b653a64f0caf3eb9bb454a "pdflatex"
+  "assignment6.tex" 1777416604.09113 10951 0bf966fd3d303acd74cada3eb3ad660d ""
   (generated)
   "assignment6.aux"
   "assignment6.log"
