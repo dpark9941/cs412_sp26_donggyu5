@@ -38,15 +38,9 @@
     % ---- 1(b) ----
     \item \textbf{(3 points) What is the motivation behind using the k-medians algorithm instead of the k-means algorithm in certain situations? Is the k-medians algorithm more computationally demanding than k-means?}
     \\
-    \textbf{Motivation.}
-    The core difference is the choice of representative value: k-means uses the \textit{mean}, while k-medians uses the \textit{median} (the 50th percentile). The mean is sensitive to outliers because extreme values shift it significantly. The median, by contrast, is robust: even when some values are extremely high or low, the median remains stable.
+    % TODO: Answer here.
+    K-median will perform better than K-means in the presence of outliers in the dataset. However, K-median is computationlly heavier because of the sorting operation. 
 
-    A concrete example is clustering employee salaries. A small number of top earners will skew the cluster mean upward, causing the centroid to drift away from the bulk of the data. The median ignores these extremes and stays representative of the majority. Therefore, k-medians is preferred when the data contains outliers or heavy-tailed distributions.
-
-    The algorithm itself follows the same iterative structure as k-means: select $k$ initial medians, assign each point to its nearest cluster, recompute each cluster's median feature-wise, and repeat until convergence.
-
-    \textbf{Computational cost.}
-    Yes, k-medians is more computationally demanding than k-means. Computing the mean requires a single pass over $n$ points ($O(n)$), whereas computing the median requires sorting ($O(n \log n)$) or a linear-time selection algorithm with a larger constant. Since the median must be recomputed for every feature in every cluster at each iteration, the per-iteration cost of k-medians is higher than that of k-means.
 
     \vspace{2em}
 
