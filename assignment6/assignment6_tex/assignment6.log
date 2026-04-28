@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.28)  28 APR 2026 15:52
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.2.28)  28 APR 2026 16:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -492,7 +492,7 @@ File: l3backend-pdftex.def 2024-02-20 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count304
 \l__pdf_internal_box=\box67
 )
-No file assignment6.aux.
+(./assignment6.aux)
 \openout1 = `assignment6.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
@@ -509,6 +509,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 17.
 LaTeX Font Info:    ... okay on input line 17.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 17.
 LaTeX Font Info:    ... okay on input line 17.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -577,39 +578,35 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 19.
 (/usr/local/texlive/2024/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \hbox (badness 10000) in paragraph at lines 29--32
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 37--40
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 45--48
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 53--56
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 61--64
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 69--72
+Underfull \hbox (badness 10000) in paragraph at lines 50--53
 
  []
 
 [1
 
-{/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+{/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/loc
+al/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
+Underfull \hbox (badness 10000) in paragraph at lines 58--61
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 66--69
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 74--77
+
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 82--85
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 95--98
 
  []
 
@@ -620,13 +617,13 @@ L3 programming layer <2024-02-20>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 14027 strings out of 474116
- 279143 string characters out of 5743682
+ 14037 strings out of 474116
+ 279336 string characters out of 5743682
  1935187 words of memory out of 5000000
- 36153 multiletter control sequences out of 15000+600000
- 567573 words of font info for 72 fonts, out of 8000000 for 9000
+ 36159 multiletter control sequences out of 15000+600000
+ 567910 words of font info for 73 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,7n,93p,410b,257s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,7n,93p,410b,288s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 ></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><
@@ -640,11 +637,12 @@ live/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texl
 ive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texliv
 e/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive
 /2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb></usr/local/texlive/2
-024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on assignment6.pdf (6 pages, 154737 bytes).
+024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texli
+ve/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
+Output written on assignment6.pdf (6 pages, 165137 bytes).
 PDF statistics:
- 96 PDF objects out of 1000 (max. 8388607)
- 59 compressed objects within 1 object stream
+ 102 PDF objects out of 1000 (max. 8388607)
+ 63 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
