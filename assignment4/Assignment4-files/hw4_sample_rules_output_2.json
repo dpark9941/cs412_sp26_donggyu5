@@ -1,0 +1,149 @@
+{
+  "A->B": {
+    "support_count": 3,
+    "support": 0.375,
+    "confidence": 0.5,
+    "lift": 0.8,
+    "jaccard": 0.375
+  },
+  "B->A": {
+    "support_count": 3,
+    "support": 0.375,
+    "confidence": 0.6,
+    "lift": 0.8,
+    "jaccard": 0.375
+  },
+  "B->C": {
+    "support_count": 3,
+    "support": 0.375,
+    "confidence": 0.6,
+    "lift": 0.96,
+    "jaccard": 0.428571
+  },
+  "C->B": {
+    "support_count": 3,
+    "support": 0.375,
+    "confidence": 0.6,
+    "lift": 0.96,
+    "jaccard": 0.428571
+  },
+  "E->D": {
+    "support_count": 2,
+    "support": 0.25,
+    "confidence": 1.0,
+    "lift": 1.6,
+    "jaccard": 0.4
+  },
+  "E->A": {
+    "support_count": 2,
+    "support": 0.25,
+    "confidence": 1.0,
+    "lift": 1.333333,
+    "jaccard": 0.333333
+  },
+  "A->C": {
+    "support_count": 4,
+    "support": 0.5,
+    "confidence": 0.666667,
+    "lift": 1.066667,
+    "jaccard": 0.571429
+  },
+  "C->A": {
+    "support_count": 4,
+    "support": 0.5,
+    "confidence": 0.8,
+    "lift": 1.066667,
+    "jaccard": 0.571429
+  },
+  "A->D": {
+    "support_count": 4,
+    "support": 0.5,
+    "confidence": 0.666667,
+    "lift": 1.066667,
+    "jaccard": 0.571429
+  },
+  "D->A": {
+    "support_count": 4,
+    "support": 0.5,
+    "confidence": 0.8,
+    "lift": 1.066667,
+    "jaccard": 0.571429
+  },
+  "B->D": {
+    "support_count": 3,
+    "support": 0.375,
+    "confidence": 0.6,
+    "lift": 0.96,
+    "jaccard": 0.428571
+  },
+  "D->B": {
+    "support_count": 3,
+    "support": 0.375,
+    "confidence": 0.6,
+    "lift": 0.96,
+    "jaccard": 0.428571
+  },
+  "AB->D": {
+    "support_count": 2,
+    "support": 0.25,
+    "confidence": 0.666667,
+    "lift": 1.066667,
+    "jaccard": 0.333333
+  },
+  "AD->B": {
+    "support_count": 2,
+    "support": 0.25,
+    "confidence": 0.5,
+    "lift": 0.8,
+    "jaccard": 0.285714
+  },
+  "BD->A": {
+    "support_count": 2,
+    "support": 0.25,
+    "confidence": 0.666667,
+    "lift": 0.888889,
+    "jaccard": 0.285714
+  },
+  "AC->D": {
+    "support_count": 2,
+    "support": 0.25,
+    "confidence": 0.5,
+    "lift": 0.8,
+    "jaccard": 0.285714
+  },
+  "AD->C": {
+    "support_count": 2,
+    "support": 0.25,
+    "confidence": 0.5,
+    "lift": 0.8,
+    "jaccard": 0.285714
+  },
+  "CD->A": {
+    "support_count": 2,
+    "support": 0.25,
+    "confidence": 1.0,
+    "lift": 1.333333,
+    "jaccard": 0.333333
+  },
+  "AB->C": {
+    "support_count": 2,
+    "support": 0.25,
+    "confidence": 0.666667,
+    "lift": 1.066667,
+    "jaccard": 0.333333
+  },
+  "AC->B": {
+    "support_count": 2,
+    "support": 0.25,
+    "confidence": 0.5,
+    "lift": 0.8,
+    "jaccard": 0.285714
+  },
+  "BC->A": {
+    "support_count": 2,
+    "support": 0.25,
+    "confidence": 0.666667,
+    "lift": 0.888889,
+    "jaccard": 0.285714
+  }
+}

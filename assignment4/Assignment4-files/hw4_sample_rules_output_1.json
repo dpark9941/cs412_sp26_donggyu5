@@ -1,0 +1,100 @@
+{
+  "B->C": {
+    "support_count": 2,
+    "support": 0.5,
+    "confidence": 0.666667,
+    "lift": 0.888889,
+    "jaccard": 0.5
+  },
+  "C->B": {
+    "support_count": 2,
+    "support": 0.5,
+    "confidence": 0.666667,
+    "lift": 0.888889,
+    "jaccard": 0.5
+  },
+  "A->C": {
+    "support_count": 2,
+    "support": 0.5,
+    "confidence": 1.0,
+    "lift": 1.333333,
+    "jaccard": 0.666667
+  },
+  "C->A": {
+    "support_count": 2,
+    "support": 0.5,
+    "confidence": 0.666667,
+    "lift": 1.333333,
+    "jaccard": 0.666667
+  },
+  "C->E": {
+    "support_count": 2,
+    "support": 0.5,
+    "confidence": 0.666667,
+    "lift": 0.888889,
+    "jaccard": 0.5
+  },
+  "E->C": {
+    "support_count": 2,
+    "support": 0.5,
+    "confidence": 0.666667,
+    "lift": 0.888889,
+    "jaccard": 0.5
+  },
+  "B->E": {
+    "support_count": 3,
+    "support": 0.75,
+    "confidence": 1.0,
+    "lift": 1.333333,
+    "jaccard": 1.0
+  },
+  "E->B": {
+    "support_count": 3,
+    "support": 0.75,
+    "confidence": 1.0,
+    "lift": 1.333333,
+    "jaccard": 1.0
+  },
+  "B->CE": {
+    "support_count": 2,
+    "support": 0.5,
+    "confidence": 0.666667,
+    "lift": 1.333333,
+    "jaccard": 0.666667
+  },
+  "C->BE": {
+    "support_count": 2,
+    "support": 0.5,
+    "confidence": 0.666667,
+    "lift": 0.888889,
+    "jaccard": 0.5
+  },
+  "E->BC": {
+    "support_count": 2,
+    "support": 0.5,
+    "confidence": 0.666667,
+    "lift": 1.333333,
+    "jaccard": 0.666667
+  },
+  "BC->E": {
+    "support_count": 2,
+    "support": 0.5,
+    "confidence": 1.0,
+    "lift": 1.333333,
+    "jaccard": 0.666667
+  },
+  "BE->C": {
+    "support_count": 2,
+    "support": 0.5,
+    "confidence": 0.666667,
+    "lift": 0.888889,
+    "jaccard": 0.5
+  },
+  "CE->B": {
+    "support_count": 2,
+    "support": 0.5,
+    "confidence": 1.0,
+    "lift": 1.333333,
+    "jaccard": 0.666667
+  }
+}
