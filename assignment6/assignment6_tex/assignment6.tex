@@ -9,8 +9,36 @@
 \usepackage{booktabs}
 \usepackage{tikz}
 \usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
 
-\title{CS 412 Assignment 6 Report}
+% Code highlighting style setup
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=4
+}
+\lstset{style=mystyle}
+
+\title{CS 412 Assignment 6}
 \author{Donggyu Park}
 \date{\today}
 
@@ -26,8 +54,8 @@
 \begin{enumerate}[label=(\alph*)]
 
     % ---- 1(a) ----
-    \item \textbf{(3 points) In the K-Means algorithm, the initial placement of centroids has only a minimal impact on the quality of the resulting clustering. Discuss how initialization affects convergence and solution quality.}
-    \\
+    \item 
+
     % TODO: Answer here.
     The initialization in K-Means can actually have a significant impact on convergence and quality. 
     If the initialization is not ideal, for example a random k placement, it takes multiple iterations to converge to a good solution, and the final clustering may still be suboptimal. As a better approach, methods like K-Means++ are used to initialize centroids in a more informed manner, leading to faster convergence and better solution quality.
@@ -36,8 +64,8 @@
     \vspace{2em}
 
     % ---- 1(b) ----
-    \item \textbf{(3 points) What is the motivation behind using the k-medians algorithm instead of the k-means algorithm in certain situations? Is the k-medians algorithm more computationally demanding than k-means?}
-    \\
+    \item 
+
     % TODO: Answer here.
     K-median will perform better than K-means in the presence of outliers in the dataset. However, K-median is computationlly heavier because of the sorting operation. 
 
@@ -45,46 +73,57 @@
     \vspace{2em}
 
     % ---- 1(c) ----
-    \item \textbf{(3 points) A student claims that in a perfect clustering, the conditional entropy $H(Y \mid C)$ is maximized. Evaluate this claim and determine what value $H(Y \mid C)$ should take in the ideal case. Justify your answer.}
-    \\
+    \item
+
     % TODO: Answer here.
+    Entropy is a measure of uncertainty or impurity in a dataset. 
+    If the student claims a perfect clustering, those clusters should have no uncertainty 
+    as all the points within each cluster must belong to the same correct class. 
+    Therefore, the conditional entropy should be 0 for all clusters in this case 
+    and student's claim is wrong.
 
 
     \vspace{2em}
 
     % ---- 1(d) ----
-    \item \textbf{(3 points) In the K-Means Clustering algorithm, why might a cluster center have no points assigned to it after the cluster assignment step? Explain how this situation can arise during the algorithm's iterations.}
-    \\
+    \item 
+
     % TODO: Answer here.
+    If one centroid is placed very far from datapoints, it may not be assigned any points as the data points will choose the nearest centroid.
+    If a dataset can be clearly separated into, say two clusters, and then K-Means is asked to find 10 clusters, the other 8-non-relevant centroids may not be assigned any points.
 
 
     \vspace{2em}
 
     % ---- 1(e) ----
-    \item \textbf{(4 points) What is the best clustering method (partition-based, hierarchical, or density) for clustering employees in a company based on their salaries and years of working experience? Justify your answer, assuming the data is continuous and free of significant outliers.}
-    \\
+    \item 
+
     % TODO: Answer here.
+    Since the data is continuous and free of significant outliers, we can eliminate Density-based clustering methods.
+    Salary tends to increase with levels of employees. Thus hierarchical clustering method will be suitable for preserving the level of employees.
 
 
     \vspace{2em}
 
     % ---- 1(f) ----
-    \item \textbf{(4 points) Explain why a typical hierarchical clustering method may not lead to better quality clustering than a partitioning method.}
-    \\
-    % TODO: Answer here.
+    \item
 
+    % TODO: Answer here.
+    In hierarchical clustering, once a point is clustered, there is no more modification. Once a point is misclustered due to a noise or error 
+    this action cannot be undone and decreases the overall quality of final solution.
+    However, partition based clustering iteratively updates the clusters. This iterative approach will allow global optimization
+    by achieving minimum loss with respect to its own loss function.
 
     \vspace{2em}
 
     % ---- 1(g) ----
-    \item \textbf{(4 points) In DBSCAN, if a point $p$ is directly density-reachable from a point $q$, explain why this implies that $q$ must be a core point, but $p$ does not necessarily have to be.}
-
-    \textit{Recall:} A point $p$ is directly density-reachable from $q$ (w.r.t.\ $\mathit{Eps}$, $\mathit{MinPts}$) if
+    \item
+    % TODO: Answer here.
+    The definition of directly density-reachable is:
     \[
         p \in N_{\mathit{Eps}}(q) \quad \text{and} \quad |N_{\mathit{Eps}}(q)| \geq \mathit{MinPts}.
     \]
-    \\
-    % TODO: Answer here.
+    By definition, it automatically states that $q$ must be a core point. $|N_{\mathit{Eps}}(q)| \geq \mathit{MinPts}$
 
 
 \end{enumerate}
@@ -95,78 +134,82 @@
 % ==========================================
 \section*{2. Clustering Evaluation (26 points)}
 
-Cluster information (n = 19, $|X|=6$, $|O|=6$, $|\Delta|=7$):
-\begin{center}
-\begin{tabular}{lccc|c}
-\toprule
- & $X$ & $O$ & $\Delta$ & Total \\
-\midrule
-Cluster 1 & 5 & 0 & 2 & 7 \\
-Cluster 2 & 1 & 4 & 1 & 6 \\
-Cluster 3 & 0 & 2 & 4 & 6 \\
-\bottomrule
-\end{tabular}
-\end{center}
-
 \begin{enumerate}[label=(\alph*)]
 
     % ---- 2(a) ----
-    \item \textbf{(4 points) What is the total purity of this clustering?}
+    \item
 
     The purity is defined as:
     \[
         \text{Purity}(\Omega, \mathbb{C}) = \frac{1}{n} \sum_{k} \max_{j} |C_k \cap L_j|
     \]
     % TODO: Compute total purity here.
-
+    \[
+        \text{Purity} = \frac{5 + 4 + 4}{19}= \frac{13}{19}
+    \]
 
     \vspace{2em}
 
     % ---- 2(b) ----
-    \item \textbf{(6 points) What is the precision of each cluster?}
+    \item 
 
     For each cluster $C_k$ with majority class $L_j$, precision is defined as:
     \[
         \text{Precision}(C_k) = \frac{|C_k \cap L_j|}{|C_k|}
     \]
     % TODO: Compute precision for each cluster.
-
+    Cluster 1: $\frac{5}{7}$ \\
+    Cluster 2: $\frac{4}{6}$ \\
+    Cluster 3: $\frac{4}{6}$
 
     \vspace{2em}
 
     % ---- 2(c) ----
-    \item \textbf{(6 points) What is the recall of each cluster for its majority class?}
+    \item
 
     For each cluster $C_k$ with majority class $L_j$, recall is defined as:
     \[
         \text{Recall}(C_k) = \frac{|C_k \cap L_j|}{|L_j|}
     \]
     % TODO: Compute recall for each cluster.
-
+    Cluster 1: $\frac{5}{6}$ \\
+    Cluster 2: $\frac{4}{6}$ \\
+    Cluster 3: $\frac{4}{7}$
 
     \vspace{2em}
 
     % ---- 2(d) ----
-    \item \textbf{(6 points) What is the F-measure of each cluster?}
+    \item
 
     The F-measure is defined as:
     \[
         F(C_k) = \frac{2 \cdot \text{Precision}(C_k) \cdot \text{Recall}(C_k)}{\text{Precision}(C_k) + \text{Recall}(C_k)}
     \]
     % TODO: Compute F-measure for each cluster.
+    Cluster 1: $\frac{10}{13}$ \\
+    Cluster 2: $\frac{4}{6}$ \\
+    Cluster 3: $\frac{8}{13}$
 
-
-    \vspace{2em}
-
+    \newpage
     % ---- 2(e) ----
-    \item \textbf{(4 points) What is the NMI score of this clustering? (Use natural logs.)}
+    \item
 
     The Normalized Mutual Information is defined as:
     \[
         \text{NMI}(\Omega, \mathbb{C}) = \frac{I(\Omega; \mathbb{C})}{\frac{1}{2}[H(\Omega) + H(\mathbb{C})]}
     \]
-    where $I(\Omega;\mathbb{C}) = H(\Omega) - H(\Omega \mid \mathbb{C})$.
     % TODO: Compute NMI here.
+    Cluster 1 internal entropy: 0.5983 \\
+    Cluster 2 internal entropy: 0.8676 \\
+    Cluster 3 internal entropy: 0.6365 \\
+
+    \textbf{Final Results} \\ 
+    $H(Omega) = 1.0959$ \\
+    $H(C) = 1.0959$ \\
+    $H(Omega \mid C)  = 0.6954$ \\
+    $I(Omega ; C)  = 0.4005$ \\
+    $NMI = 0.3655$
+
 
 
 \end{enumerate}
@@ -177,83 +220,213 @@ Cluster 3 & 0 & 2 & 4 & 6 \\
 % ==========================================
 \section*{3. Clustering Algorithms (30 points)}
 
-The dataset consists of 13 points:
-\begin{center}
-\begin{tabular}{ccc}
-\toprule
-Index & $x_1$ & $x_2$ \\
-\midrule
-1  & 1 & 3 \\
-2  & 1 & 2 \\
-3  & 2 & 1 \\
-4  & 2 & 2 \\
-5  & 2 & 3 \\
-6  & 3 & 2 \\
-7  & 5 & 3 \\
-8  & 4 & 3 \\
-9  & 4 & 5 \\
-10 & 5 & 4 \\
-11 & 5 & 5 \\
-12 & 6 & 4 \\
-13 & 6 & 5 \\
-\bottomrule
-\end{tabular}
-\end{center}
-
 \begin{enumerate}[label=(\alph*)]
 
     % ---- 3(a) ----
-    \item \textbf{(10 points) Cluster the above points using the K-means algorithm with $k=2$. Use $(0,4)$ and $(6,5)$ as the initial centers. Show your reasoning.}
+    \item
 
-    \textbf{Initial centers:} $\mu_1 = (0, 4)$, $\mu_2 = (6, 5)$.
+    Point  1 [1 3]: d(m1)=1.4142, d(m2)=5.3852, Cluster 1 \\
+    Point  2 [1 2]: d(m1)=2.2361, d(m2)=5.8310, Cluster 1 \\
+    Point  3 [2 1]: d(m1)=3.6056, d(m2)=5.6569, Cluster 1 \\
+    Point  4 [2 2]: d(m1)=2.8284, d(m2)=5.0000, Cluster 1 \\
+    Point  5 [2 3]: d(m1)=2.2361, d(m2)=4.4721, Cluster 1 \\
+    Point  6 [3 2]: d(m1)=3.6056, d(m2)=4.2426, Cluster 1 \\
+    Point  7 [5 3]: d(m1)=5.0990, d(m2)=2.2361, Cluster 2 \\
+    Point  8 [4 3]: d(m1)=4.1231, d(m2)=2.8284, Cluster 2 \\
+    Point  9 [4 5]: d(m1)=4.1231, d(m2)=2.0000, Cluster 2 \\
+    Point 10 [5 4]: d(m1)=5.0000, d(m2)=1.4142, Cluster 2 \\
+    Point 11 [5 5]: d(m1)=5.0990, d(m2)=1.0000, Cluster 2 \\
+    Point 12 [6 4]: d(m1)=6.0000, d(m2)=1.0000, Cluster 2 \\
+    Point 13 [6 5]: d(m1)=6.0828, d(m2)=0.0000, Cluster 2 \\
 
-    \textbf{Iteration 1 --- Assignment step:}
+    New Centroid 1: [1.8333 2.1667] \\
+    New Centroid 2: [5.     4.1429] \\
 
-    For each point, compute the Euclidean distance to each center and assign to the nearest.
-    \[
-        d(p, \mu) = \sqrt{(x_1 - \mu_{x_1})^2 + (x_2 - \mu_{x_2})^2}
-    \]
-    % TODO: Compute distances and show assignment table.
+    \textbf{Code}
+    \begin{lstlisting}
+    # Problem 3a
+
+    centroids = np.array([
+        [0,4],
+        [6,5]
+    ])
+    points = np.array([
+        [1, 3], [1, 2], [2, 1],
+        [2, 2], [2, 3], [3, 2],
+        [5, 3], [4, 3], [4, 5],
+        [5, 4], [5, 5], [6, 4],
+        [6, 5]
+    ])
+
+    def d(p,mu):
+        return la.norm(p - mu)
+
+    distances = np.zeros((len(points), len(centroids)))
+    assignments = np.zeros(len(points), dtype=int)
+
+    print("--- Iteration 1 ---")
+    for i in range(len(points)):
+        for j in range(len(centroids)):
+            distances[i, j] = d(points[i], centroids[j])
+        assignments[i] = np.argmin(distances[i])
+        
+        print(f"Point {i+1:2d} {points[i]}: d(m1)={distances[i,0]:.4f}, d(m2)={distances[i,1]:.4f} -> Cluster {assignments[i]+1}")
+
+    # Centroid update
+    new_centroids = np.zeros_like(centroids, dtype=float)
+    print("\n--- Update Step ---")
+    for j in range(len(centroids)):
+        cluster_points = points[assignments == j]
+        if len(cluster_points) > 0:
+            new_centroids[j] = np.mean(cluster_points, axis=0)
+        else:
+            new_centroids[j] = centroids[j]
+            
+        print(f"New Centroid {j+1}: {new_centroids[j]}")
+
+    \end{lstlisting}
 
 
-    \textbf{Iteration 1 --- Update step:}
-    % TODO: Compute new centroids.
-
-
-    \textbf{Iteration 2 (and subsequent):}
-    % TODO: Continue until convergence. Show final clusters.
-
-
-    \vspace{2em}
+    \newpage
 
     % ---- 3(b) ----
-    \item \textbf{(10 points) Use DBSCAN with $\mathit{MinPts} = 2$ and $\mathit{Eps} = 1.5$. Outline your clustering process.}
+    \item
 
-    \textbf{Step 1 --- Identify core points:}
+    Point  1 [1 3]: neighbors=[1, 2, 4, 5] \\
+    Point  2 [1 2]: neighbors=[1, 2, 3, 4, 5] \\
+    Point  3 [2 1]: neighbors=[2, 3, 4, 6] \\
+    Point  4 [2 2]: neighbors=[1, 2, 3, 4, 5, 6] \\
+    Point  5 [2 3]: neighbors=[1, 2, 4, 5, 6] \\
+    Point  6 [3 2]: neighbors=[3, 4, 5, 6, 8] \\
+    Point  7 [5 3]: neighbors=[7, 8, 10, 12] \\
+    Point  8 [4 3]: neighbors=[6, 7, 8, 10] \\
+    Point  9 [4 5]: neighbors=[9, 10, 11] \\
+    Point 10 [5 4]: neighbors=[7, 8, 9, 10, 11, 12, 13] \\
+    Point 11 [5 5]: neighbors=[9, 10, 11, 12, 13] \\
+    Point 12 [6 4]: neighbors=[7, 10, 11, 12, 13] \\
+    Point 13 [6 5]: neighbors=[10, 11, 12, 13] \\
 
-    A point $p$ is a core point if $|N_{\mathit{Eps}}(p)| \geq \mathit{MinPts}$.
-    % TODO: For each point, list neighbors within Eps=1.5 and identify core/border/noise.
+    Core points: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13] \\
+    Cluster 1: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13] \\
+    Noise: []
 
+    \textbf{Code}
 
-    \textbf{Step 2 --- Form clusters:}
-    % TODO: Expand clusters from core points. List final clusters.
+    \begin{lstlisting}
+    eps = 1.5
+    min_pts = 2
+    n = len(points)
 
+    dist_matrix = np.zeros((n, n))
+    for i in range(n):
+        for j in range(n):
+            dist_matrix[i, j] = np.linalg.norm(points[i] - points[j])
 
-    \vspace{2em}
+    neighbors = []
+    core_points = []
+
+    for i in range(n):
+        pts_in_eps = np.where(dist_matrix[i] <= eps)[0]
+        neighbors.append(pts_in_eps)
+        if len(pts_in_eps) >= min_pts:
+            core_points.append(i)
+
+    clusters = []
+    visited = set()
+
+    for p in core_points:
+        if p in visited:
+            continue
+            
+        cluster = []
+        queue = [p]
+        visited.add(p)
+        
+        while queue:
+            curr = queue.pop(0)
+            cluster.append(curr)
+            
+            if curr in core_points:
+                for neighbor in neighbors[curr]:
+                    if neighbor not in visited:
+                        visited.add(neighbor)
+                        queue.append(neighbor)
+                        
+        clusters.append(cluster)
+
+    noise = [i for i in range(n) if i not in visited]
+
+    for i in range(n):
+        print(f"Point {i+1:2d} {points[i]}: neighbors={[n+1 for n in neighbors[i]]}")
+
+    print(f"\nCore points: {[p+1 for p in core_points]}")
+
+    for idx, c in enumerate(clusters):
+        sorted_cluster = sorted([p+1 for p in c])
+        print(f"Cluster {idx+1}: {sorted_cluster}")
+
+    print(f"Noise: {[p+1 for p in noise]}")
+    \end{lstlisting}
+
+    \newpage
 
     % ---- 3(c) ----
-    \item \textbf{(10 points) Perform AGNES (single-link, Euclidean distance) on the above points.}
+    \item
 
-    \textbf{Single-link distance:}
-    \[
-        d_{\text{single}}(C_i, C_j) = \min_{p \in C_i,\, q \in C_j} d(p, q)
-    \]
+    Step  1: Merge [1] and [2] (Distance: 1.0000) \\
+    Step  2: Merge [3] and [4] (Distance: 1.0000) \\
+    Step  3: Merge [5] and [1, 2] (Distance: 1.0000) \\
+    Step  4: Merge [6] and [3, 4] (Distance: 1.0000) \\
+    Step  5: Merge [7] and [8] (Distance: 1.0000) \\
+    Step  6: Merge [9] and [11] (Distance: 1.0000) \\
+    Step  7: Merge [10] and [12] (Distance: 1.0000) \\
+    Step  8: Merge [13] and [9, 11] (Distance: 1.0000) \\
+    Step  9: Merge [5, 1, 2] and [6, 3, 4] (Distance: 1.0000) \\
+    Step 10: Merge [7, 8] and [10, 12] (Distance: 1.0000) \\
+    Step 11: Merge [13, 9, 11] and [7, 8, 10, 12] (Distance: 1.0000) \\
+    Step 12: Merge [5, 1, 2, 6, 3, 4] and [13, 9, 11, 7, 8, 10, 12] (Distance: 1.4142) \\
 
-    \textbf{Initial state:} Each of the 13 points forms its own singleton cluster.
+    \textbf{Code}
+    
+    \begin{lstlisting}
+    # Problem 3c
 
-    % TODO: Show the merge sequence step by step.
-    % At each step: identify the pair of clusters with minimum single-link distance,
-    % merge them, and update the distance matrix.
+    n = len(points)
+    clusters = [[i+1] for i in range(n)]
+
+    dist_matrix = np.zeros((n, n))
+    for i in range(n):
+        for j in range(n):
+            if i != j:
+                dist_matrix[i, j] = np.linalg.norm(points[i] - points[j])
+            else:
+                dist_matrix[i, j] = np.inf
+
+    step = 1
+    while len(clusters) > 1:
+        min_dist = np.inf
+        m_i, m_j = -1, -1
+        
+        c_len = len(clusters)
+        for i in range(c_len):
+            for j in range(i + 1, c_len):
+                d = min([dist_matrix[p-1, q-1] for p in clusters[i] for q in clusters[j]])
+                if d < min_dist:
+                    min_dist = d
+                    m_i, m_j = i, j
+                    
+        c1 = clusters[m_i]
+        c2 = clusters[m_j]
+        
+        print(f"Step {step:2d}: Merge {c1} and {c2} (Distance: {min_dist:.4f})")
+        
+        new_c = c1 + c2
+        clusters.pop(m_j)
+        clusters.pop(m_i)
+        clusters.append(new_c)
+        
+        step += 1
+    \end{lstlisting}
 
 
 \end{enumerate}
@@ -263,63 +436,68 @@ Index & $x_1$ & $x_2$ \\
 % Question 4
 % ==========================================
 \section*{4. Average-Link Agglomerative Clustering (20 points)}
-
-Pairwise distances between points $a, b, c, d, e$:
-\begin{center}
-\begin{tabular}{c|ccccc}
- & $a$ & $b$ & $c$ & $d$ & $e$ \\ \hline
-$a$ & 0     &       &       &     &   \\
-$b$ & 2.1   & 0     &       &     &   \\
-$c$ & 4.0   & 6.1   & 0     &     &   \\
-$d$ & 7.8   & 8.6   & 6.1   & 0   &   \\
-$e$ & 7.3   & 7.2   & 7.3   & 3.1 & 0 \\
-\end{tabular}
-\end{center}
-
-\textbf{Average-link distance between clusters $C_i$ and $C_j$:}
-\[
-    d_{\text{avg}}(C_i, C_j) = \frac{1}{|C_i| \cdot |C_j|} \sum_{p \in C_i} \sum_{q \in C_j} d(p, q)
-\]
-
 \begin{enumerate}[label=(\alph*)]
 
     % ---- 4(a) ----
-    \item \textbf{(10 points) Show which two clusters are merged at each step.}
-
+    \item
     % TODO: Show the merge decision at each step (Steps 1 through 4).
 
-    \textbf{Step 1:}
+    \textbf{Step 1:} \\
     % Identify the pair with minimum average-link distance and merge.
+    Distance from a to b is the minimum average-link distance of 2.1 \\
+    Merge: \{a,b\},c,d,e
 
-
-    \textbf{Step 2:}
+    \textbf{Step 2:} \\
     % Update distances and identify the next pair to merge.
+    Distance from d to e is the minimum average-link distance of 3.1 \\
+    Merge: \{a,b\},c,\{d,e\}
 
-
-    \textbf{Step 3:}
+    \textbf{Step 3:} \\
     % Update distances and identify the next pair to merge.
-
-
-    \textbf{Step 4:}
-    % Final merge.
-
+    Distance from \{a,b\} to c is the minimum average-link distance of 5.05 \\
+    Merge: \{a,b,c\},\{d,e\}
 
     \vspace{2em}
 
     % ---- 4(b) ----
-    \item \textbf{(10 points) Show the updated pairwise distance matrix after each merging step.}
+    \item 
 
     \textbf{After Step 1:}
     % TODO: Updated distance matrix.
+    \begin{center}
+    \begin{tabular}{c|ccccc}
+         & $ab$  & $c$  & $d$ & $e$   \\ \hline
+    $ab$ & 0     &       &      &     \\
+    $c$  & 5.05  & 0     &      &     \\
+    $d$  & 8.2   & 6.1   & 0    &     \\
+    $e$  & 7.25  & 7.3   & 3.1  & 0   \\
+    \end{tabular}
+    \end{center}
 
 
     \textbf{After Step 2:}
     % TODO: Updated distance matrix.
+    \begin{center}
+    \begin{tabular}{c|ccccc}
+         & $ab$  & $c$  & $de$  \\ \hline
+    $ab$ & 0     &       &      \\
+    $c$  & 5.05  & 0     &      \\
+    $de$ & 7.725 & 6.7   & 0    \\
 
+    \end{tabular}
+    \end{center}
 
     \textbf{After Step 3:}
     % TODO: Updated distance matrix.
+    \begin{center}
+    \begin{tabular}{c|ccccc}
+          & $abc$ & $de$  \\ \hline
+    $abc$ & 0     &       \\
+    $de$  & 7.383 & 0     \\
 
+
+    \end{tabular}
+    \end{center}
 
 \end{enumerate}
 
